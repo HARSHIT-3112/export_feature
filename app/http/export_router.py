@@ -13,11 +13,15 @@ async def export_document(payload: dict):
         # Build the gRPC request from HTTP JSON payload
         request = export_pb2.ExportRequest(
             document_id=payload.get("document_id", ""),
+            title=payload.get("title", ""),
+            author=payload.get("author", ""),                # ✅ added
+            category=payload.get("category", ""),            # ✅ added
+            tags=payload.get("tags", []),                    # ✅ added
+            created_at=payload.get("created_at", ""),        # ✅ added
+            content=payload.get("content", ""),
             export_type=payload.get("export_type", "pdf"),
             page_size=payload.get("page_size", "A4"),
-            include_cover_page=payload.get("include_cover_page", False),
-            content=payload.get("content", ""),
-            title=payload.get("title", "")
+            include_cover_page=payload.get("include_cover_page", False)
         )
 
         response = await stub.ExportDocument(request)

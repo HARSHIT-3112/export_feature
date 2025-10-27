@@ -24,21 +24,17 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x65xport.proto\x12\x06\x65xport\"\xe7\x01\n\rExportRequest\x12\x13\n\x0b\x64ocument_id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x03 \x01(\t\x12\x13\n\x0b\x65xport_type\x18\x04 \x01(\t\x12\x11\n\tpage_size\x18\x05 \x01(\t\x12\x1a\n\x12include_cover_page\x18\x06 \x01(\x08\x12/\n\x05style\x18\x07 \x03(\x0b\x32 .export.ExportRequest.StyleEntry\x1a,\n\nStyleEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"L\n\x0e\x45xportResponse\x12\x14\n\x0c\x66ile_content\x18\x01 \x01(\x0c\x12\x11\n\tfile_name\x18\x02 \x01(\t\x12\x11\n\tmime_type\x18\x03 \x01(\t2P\n\rExportService\x12?\n\x0e\x45xportDocument\x12\x15.export.ExportRequest\x1a\x16.export.ExportResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x65xport.proto\x12\x06\x65xport\"\xcc\x01\n\rExportRequest\x12\x13\n\x0b\x64ocument_id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x03 \x01(\t\x12\x10\n\x08\x63\x61tegory\x18\x04 \x01(\t\x12\x0c\n\x04tags\x18\x05 \x03(\t\x12\x12\n\ncreated_at\x18\x06 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x07 \x01(\t\x12\x13\n\x0b\x65xport_type\x18\x08 \x01(\t\x12\x11\n\tpage_size\x18\t \x01(\t\x12\x1a\n\x12include_cover_page\x18\n \x01(\x08\"L\n\x0e\x45xportResponse\x12\x14\n\x0c\x66ile_content\x18\x01 \x01(\x0c\x12\x11\n\tfile_name\x18\x02 \x01(\t\x12\x11\n\tmime_type\x18\x03 \x01(\t2P\n\rExportService\x12?\n\x0e\x45xportDocument\x12\x15.export.ExportRequest\x1a\x16.export.ExportResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'export_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_EXPORTREQUEST_STYLEENTRY']._loaded_options = None
-  _globals['_EXPORTREQUEST_STYLEENTRY']._serialized_options = b'8\001'
   _globals['_EXPORTREQUEST']._serialized_start=25
-  _globals['_EXPORTREQUEST']._serialized_end=256
-  _globals['_EXPORTREQUEST_STYLEENTRY']._serialized_start=212
-  _globals['_EXPORTREQUEST_STYLEENTRY']._serialized_end=256
-  _globals['_EXPORTRESPONSE']._serialized_start=258
-  _globals['_EXPORTRESPONSE']._serialized_end=334
-  _globals['_EXPORTSERVICE']._serialized_start=336
-  _globals['_EXPORTSERVICE']._serialized_end=416
+  _globals['_EXPORTREQUEST']._serialized_end=229
+  _globals['_EXPORTRESPONSE']._serialized_start=231
+  _globals['_EXPORTRESPONSE']._serialized_end=307
+  _globals['_EXPORTSERVICE']._serialized_start=309
+  _globals['_EXPORTSERVICE']._serialized_end=389
 # @@protoc_insertion_point(module_scope)
