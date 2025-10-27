@@ -1,11 +1,16 @@
-import grpc
+# app/server.py
 import asyncio
 import logging
-from grpc_reflection.v1alpha import reflection   # ✅ add this import
+import signal
+import grpc
+from grpc_reflection.v1alpha import reflection
 from app.services import export_service
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
+
+GRPC_PORT = 50051
+
 
 def serve():
     server = grpc.aio.server(
@@ -15,23 +20,42 @@ def serve():
         ]
     )
 
+    # register service
     export_service.register(server)
 
-    # ✅ Enable reflection
-    SERVICE_NAMES = (
-        export_service.export_pb2.DESCRIPTOR.services_by_name['ExportService'].full_name,
-        reflection.SERVICE_NAME,
-    )
-    reflection.enable_server_reflection(SERVICE_NAMES, server)
+    # register reflection
+    try:
+        svc_name = export_service.export_pb2.DESCRIPTOR.services_by_name["ExportService"].full_name
+        SERVICE_NAMES = (svc_name, reflection.SERVICE_NAME)
+        reflection.enable_server_reflection(SERVICE_NAMES, server)
+        logger.info("gRPC reflection enabled")
+    except Exception:
+        logger.warning("Could not enable reflection; continuing without it")
 
-    server.add_insecure_port("[::]:50051")
+    server.add_insecure_port(f"[::]:{GRPC_PORT}")
     return server
 
-async def main():
+
+async def _run():
     server = serve()
-    logger.info("✅ ExportService gRPC Server started on port 50051 with reflection enabled")
     await server.start()
-    await server.wait_for_termination()
+    logger.info(f"🚀 ExportService gRPC Server started on port {GRPC_PORT}")
+
+    # graceful shutdown on signals
+    loop = asyncio.get_running_loop()
+    stop = asyncio.Event()
+
+    for sig in (signal.SIGINT, signal.SIGTERM):
+        try:
+            loop.add_signal_handler(sig, lambda: stop.set())
+        except NotImplementedError:
+            # windows
+            pass
+
+    await stop.wait()
+    logger.info("Shutting down gRPC server...")
+    await server.stop(5)
+
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(_run())
