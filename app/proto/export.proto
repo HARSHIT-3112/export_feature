@@ -2,30 +2,22 @@ syntax = "proto3";
 
 package export;
 
-// -----------------------------
-// Export Service Definition
-// -----------------------------
 service ExportService {
   rpc ExportDocument (ExportRequest) returns (ExportResponse);
 }
 
-// -----------------------------
-// Request Structure
-// -----------------------------
 message ExportRequest {
   string document_id = 1;
   string title = 2;
-  string content = 3;           // HTML content from frontend
+  string content = 3;
   string export_type = 4;       // "pdf" | "docx"
   string page_size = 5;         // "A4" | "Letter"
-  bool include_cover_page = 6;  // optional cover page
+  bool include_cover_page = 6;
+  map<string, string> style = 7;  // Dynamic styling key-value pairs
 }
 
-// -----------------------------
-// Response Structure
-// -----------------------------
 message ExportResponse {
-  bytes file_content = 1;       // File as bytes (blob)
-  string file_name = 2;         // e.g. "AI Research.pdf"
-  string mime_type = 3;         // e.g. "application/pdf"
+  bytes file_content = 1;
+  string file_name = 2;
+  string mime_type = 3;
 }
